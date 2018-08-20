@@ -4,7 +4,7 @@
   "description": "Personal server",
   "main": "app.js",
   "scripts": {
-    "start": "./.startCommands.sh"
+    "start": "heroku local"
   },
   "author": "Avery Vine",
   "license": "ISC",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/AveryVine/PersonalServer#readme",
   "devDependencies": {
+    "heroku": "^7.9.3",
     "jshint": "^2.9.6"
   }
 }

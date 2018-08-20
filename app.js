@@ -16,8 +16,8 @@ app.get("/discordBot/:function", function (req, res) {
 	switch (req.params.function) {
 		case "keys":
 			res.json({
-				"riot": process.env.riot,
-				"championGG": process.env.championGG
+				"riot": process.env.RIOT,
+				"championGG": process.env.CHAMPION_GG
 			});
 			break;
 		default:

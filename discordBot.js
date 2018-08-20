@@ -41,13 +41,11 @@ client.on('message', message => {
 });
 
 function loadApiKeysFromProcess() {
-	apiKeys.discord = process.env.discord;
-	apiKeys.riot = process.env.riot;
-	apiKeys.championGG = process.env.championGG;
-	apiKeys.google = process.env.google;
-	apiKeys.twitchId = process.env.twitchId;
-
-	apiKeys.startBot = process.env.startBot;
+	apiKeys.discord = process.env.DISCORD;
+	apiKeys.riot = process.env.RIOT;
+	apiKeys.championGG = process.env.CHAMPION_GG;
+	apiKeys.google = process.env.GOOGLE;
+	apiKeys.twitchId = process.env.TWITCH;
 }
 
 function help(message) {
