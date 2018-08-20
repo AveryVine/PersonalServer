@@ -38,7 +38,7 @@ app.listen(app.get('port'), function () {
 
 //gets around the Heroku (hosting service) limit of 30 minutes of inactivity
 function ping() {
-	request('http://avery-vine-server.herokuapp.com', function (error) {
+	request('https://avery-vine-server.herokuapp.com', function (error) {
 		if (error) {
 			console.log('Failed to ping hosting service!');
 		}
