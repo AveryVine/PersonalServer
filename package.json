@@ -1,0 +1,29 @@
+{
+  "name": "personal_server",
+  "version": "1.0.0",
+  "description": "Personal server",
+  "main": "app.js",
+  "scripts": {
+    "start": "./.startCommands.sh"
+  },
+  "author": "Avery Vine",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "discord.js": "^11.2.1",
+    "express": "^4.14.0",
+    "request": "^2.83.0",
+    "youtube-search": "^1.0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AveryVine/PersonalServer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AveryVine/PersonalServer/issues"
+  },
+  "homepage": "https://github.com/AveryVine/PersonalServer#readme",
+  "devDependencies": {
+    "jshint": "^2.9.6"
+  }
+}
