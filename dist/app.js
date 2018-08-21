@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var apikeys_1 = __importDefault(require("./apikeys"));
+var ApiKeys_1 = __importDefault(require("./ApiKeys"));
 var App = /** @class */ (function () {
     function App() {
         this.app = express_1.default();
@@ -23,7 +23,7 @@ var App = /** @class */ (function () {
             res.send(200);
         });
         router.get('/apikeys', function (req, res) {
-            res.status(200).send(apikeys_1.default.getInstance().getKeys().toJSON());
+            res.status(200).send(ApiKeys_1.default.getInstance().getKeys().toJSON());
         });
         this.app.use('/', router);
     };

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = __importStar(require("discord.js"));
 var DiscordMessage_1 = __importDefault(require("./DiscordMessage"));
-var ApiKeys_1 = __importDefault(require("./ApiKeys"));
+var ApiKeys_1 = __importDefault(require("../ApiKeys"));
 var DiscordBot = /** @class */ (function () {
     function DiscordBot() {
         this.client = new Discord.Client();

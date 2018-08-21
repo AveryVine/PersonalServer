@@ -1,6 +1,6 @@
-import app from "./app";
-import DiscordBot from './discordbot';
-import { request } from "http";
+import app from "./App";
+import DiscordBot from './DiscordBot/DiscordBot';
+import request from 'request';
 
 const port = (process.env.PORT || 5000);
 app.listen(port, function () {
@@ -15,8 +15,7 @@ app.listen(port, function () {
 
 function ping(): void {
     console.log("Pinging...");
-    request('http://localhost:5000/ping', function (error) {
-    // request('http://avery-vine-server.herokuapp.com/ping', function (error) {
+    request('http://avery-vine-server.herokuapp.com/ping', function (error) {
         if (error) {
 			console.log('Failed to ping hosting service!');
 		}
