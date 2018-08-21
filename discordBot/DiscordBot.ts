@@ -1,11 +1,13 @@
-import * as Discord from 'discord.js'
-import DiscordMessage from './DiscordMessage'
+import * as Discord from 'discord.js';
+import { Message, TextChannel, DMChannel, GroupDMChannel, RichEmbed } from 'discord.js';
+import DiscordMessage from './DiscordMessage';
 import ApiKeys from '../ApiKeys';
 
 class DiscordBot {
-    client: Discord.Client;
+    private static instance: DiscordBot;
+    private client: Discord.Client;
 
-    constructor() {
+    private constructor() {
         this.client = new Discord.Client();
 
         this.client.on('ready', () => {
@@ -15,8 +17,22 @@ class DiscordBot {
         this.client.on('message', (message) => {
             new DiscordMessage(message).executeAction()
         });
+    }
 
+    public login() {
         this.client.login(ApiKeys.getInstance().getKeys().get('discord'));
+    }
+
+    public sendMessage(message: string | RichEmbed, channel: TextChannel | DMChannel | GroupDMChannel) {
+        console.log("Sending message: " + message);
+        channel.send(message);
+    }
+
+    public static getInstance() {
+        if (!DiscordBot.instance) {
+            DiscordBot.instance = new DiscordBot();
+        }
+        return DiscordBot.instance;
     }
 }
 

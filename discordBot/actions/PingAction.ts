@@ -1,8 +1,15 @@
 import Action from './Action';
+import DiscordBot from '../DiscordBot';
+import DiscordMessage from '../DiscordMessage'
+import { RichEmbed, Message } from 'discord.js';
 
-class PingAction implements Action {
+class PingAction extends Action {
+    constructor(message: DiscordMessage) {
+        super(message);
+    }
+
     public execute() {
-        console.log("Received PING action");
+        DiscordBot.getInstance().sendMessage("Pong", this.message.getChannel());
     }
 }
 

@@ -1,14 +1,16 @@
 import Action from './Action';
+import DiscordMessage from '../DiscordMessage';
 
-class TwitchAction implements Action {
-    args: string;
+class TwitchAction extends Action {
+    args: string[];
 
-    constructor(args: string) {
-        this.args = args;
+    constructor(message: DiscordMessage) {
+        super(message);
+        this.args = message.getArgs();
     }
 
     public execute() {
-        console.log("Received TWITCH action");
+
     }
 }
 

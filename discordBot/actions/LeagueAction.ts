@@ -1,21 +1,23 @@
 import Action from './Action'
+import DiscordMessage from '../DiscordMessage';
 
 export enum LeagueActionType {
     SUMMONER = "summoner",
     BANS = "bans"
 }
 
-class LeagueAction implements Action {
+class LeagueAction extends Action {
     type: LeagueActionType;
-    args: string;
+    args: string[];
 
-    constructor(type: LeagueActionType, args: string) {
+    constructor(message: DiscordMessage, type: LeagueActionType) {
+        super(message);
         this.type = type;
-        this.args = args;
+        this.args = message.getArgs();
     }
 
     public execute() {
-        console.log("Received LEAGUE " + this.type.toString() + " action");
+        console.log("Type: " + this.type.toString());
     }
 }
 

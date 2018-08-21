@@ -1,8 +1,13 @@
 import Action from './Action';
+import DiscordMessage from '../DiscordMessage';
 
-class HelpAction implements Action {
+class HelpAction extends Action {
+    constructor(message: DiscordMessage) {
+        super(message);
+    }
+
     public execute() {
-        console.log("Received HELP action");
+
     }
 }
 

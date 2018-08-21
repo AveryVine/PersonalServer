@@ -1,8 +1,12 @@
 import Action from './Action';
+import DiscordMessage from '../DiscordMessage';
 
-class InvalidAction implements Action {
+class InvalidAction extends Action {
+    constructor(message: DiscordMessage) {
+        super(message);
+    }
     public execute() {
-        console.log("Received INVALID action");
+
     }
 }
 

@@ -1,4 +1,4 @@
-import { Message, User } from 'discord.js'
+import { Message, User, TextChannel, DMChannel, GroupDMChannel } from 'discord.js'
 import Action from './actions/Action';
 import PingAction from './actions/PingAction';
 import HelpAction from './actions/HelpAction';
@@ -11,6 +11,7 @@ import { LeagueActionType } from './actions/LeagueAction';
 
 class DiscordMessage {
     private author: User;
+    private channel: TextChannel | DMChannel | GroupDMChannel;
     private rawContent: string[];
     private command: Command;
     private args: string[];
@@ -18,19 +19,32 @@ class DiscordMessage {
 
     constructor(message: Message) {
         this.author = message.author;
+        this.channel = message.channel;
         this.rawContent = message.content.trim().split(' ');
         this.command = Command.NO_COMMAND;
-        this.args = this.rawContent.splice(0, 1);
+        this.args = this.rawContent.slice(0).splice(0, 1);
 
         if (!this.authorIsBot() && this.isCommand()) {
             this.command = Command.parse(this.rawContent[0]);
         }
 
-        this.action = this.command.action.apply(this.args);
+        this.action = this.command.action.call(this);
     }
 
     public executeAction() {
         this.action.execute();
+    }
+
+    public getChannel(): TextChannel | DMChannel | GroupDMChannel {
+        return this.channel;
+    }
+
+    public getCommand(): Command {
+        return this.command;
+    }
+
+    public getArgs(): string[] {
+        return this.args;
     }
 
     public authorIsBot() {
@@ -44,36 +58,37 @@ class DiscordMessage {
 
 class Command {
     readonly displayValue: string;
-    readonly action: Function;
+    readonly action: (message: DiscordMessage) => Action;
 
     private static AllValues: { [name: string]: Command } = {};
 
-    static readonly PING = new Command('!ping', () => {
-        return new PingAction();
+    static readonly PING = new Command('!ping', (message: DiscordMessage) => {
+        console.log(message);
+        return new PingAction(message);
     });
-    static readonly HELP = new Command('!help', () => {
-        return new HelpAction();
+    static readonly HELP = new Command('!help', (message: DiscordMessage) => {
+        return new HelpAction(message);
     });
-    static readonly SUMMONER = new Command('!summoner', (args: string) => {
-        return new LeagueAction(LeagueActionType.SUMMONER, args);
+    static readonly SUMMONER = new Command('!summoner', (message: DiscordMessage) => {
+        return new LeagueAction(message, LeagueActionType.SUMMONER);
     });
-    static readonly BANS = new Command('!bans', (args: string) => {
-        return new LeagueAction(LeagueActionType.BANS, args);
+    static readonly BANS = new Command('!bans', (message: DiscordMessage) => {
+        return new LeagueAction(message, LeagueActionType.BANS);
     });
-    static readonly YOUTUBE = new Command('!youtube', (args: string) => {
-        return new YouTubeAction(args);
+    static readonly YOUTUBE = new Command('!youtube', (message: DiscordMessage) => {
+        return new YouTubeAction(message);
     });
-    static readonly TWITCH = new Command('!twitch', (args: string) => {
-        return new TwitchAction(args);
+    static readonly TWITCH = new Command('!twitch', (message: DiscordMessage) => {
+        return new TwitchAction(message);
     });
-    static readonly INVALID = new Command('!invalid', () => {
-        return new InvalidAction();
+    static readonly INVALID = new Command('!invalid', (message: DiscordMessage) => {
+        return new InvalidAction(message);
     });
-    static readonly NO_COMMAND = new Command('!noCommand', () => {
-        return new NoAction();
+    static readonly NO_COMMAND = new Command('!noCommand', (message: DiscordMessage) => {
+        return new NoAction(message);
     });
 
-    private constructor(displayValue: string, action: Function) {
+    private constructor(displayValue: string, action: (message: DiscordMessage) => Action) {
         this.displayValue = displayValue;
         this.action = action;
 
