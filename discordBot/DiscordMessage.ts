@@ -22,7 +22,7 @@ class DiscordMessage {
         this.command = Command.NO_COMMAND;
         this.args = this.rawContent.splice(0, 1);
 
-        if (!this.authorIsBot() && this.hasValidCommand()) {
+        if (!this.authorIsBot() && this.isCommand()) {
             this.command = Command.parse(this.rawContent[0]);
         }
 
@@ -37,7 +37,7 @@ class DiscordMessage {
         return this.author.bot;
     }
 
-    private hasValidCommand() {
+    private isCommand() {
         return this.rawContent[0] !== undefined && this.rawContent[0].startsWith('!');
     }
 }
