@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { TextChannel, DMChannel, GroupDMChannel, RichEmbed } from 'discord.js';
-import DiscordMessage from './DiscordMessage';
+import DiscordMessage from './IncomingMessage';
 import ApiKeys from '../ApiKeys';
 
 class DiscordBot {

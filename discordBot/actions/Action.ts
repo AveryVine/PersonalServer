@@ -1,7 +1,7 @@
-import DiscordMessage from "../DiscordMessage";
+import IncomingMessage from "../IncomingMessage";
 
 interface Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
     execute(): void;
 }
 

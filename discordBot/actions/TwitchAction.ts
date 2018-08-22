@@ -1,12 +1,12 @@
 import Action from './Action';
 import DiscordBot from '../DiscordBot';
-import DiscordMessage from '../DiscordMessage';
+import IncomingMessage from '../IncomingMessage';
 
 class TwitchAction implements Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
     args: string[];
 
-    constructor(message: DiscordMessage) {
+    constructor(message: IncomingMessage) {
         this.message = message;
         this.args = message.getArgs();
     }

@@ -1,10 +1,10 @@
 import Action from './Action';
-import DiscordMessage from '../DiscordMessage';
+import IncomingMessage from '../IncomingMessage';
 
 class NoAction implements Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
 
-    constructor(message: DiscordMessage) {
+    constructor(message: IncomingMessage) {
         this.message = message;
     }
 

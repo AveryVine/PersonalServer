@@ -1,12 +1,12 @@
 import { Message, User, TextChannel, DMChannel, GroupDMChannel } from 'discord.js'
 import Action from './actions/Action';
-import DiscordCommand from './DiscordCommand';
+import Command from './Command';
 
-class DiscordMessage {
+class IncomingMessage {
     private author: User;
     private channel: TextChannel | DMChannel | GroupDMChannel;
     private rawContent: string[];
-    private command: DiscordCommand;
+    private command: Command;
     private args: string[];
     private action: Action;
 
@@ -14,11 +14,11 @@ class DiscordMessage {
         this.author = message.author;
         this.channel = message.channel;
         this.rawContent = message.content.trim().split(' ');
-        this.command = DiscordCommand.NO_COMMAND;
+        this.command = Command.NO_COMMAND;
         this.args = this.rawContent.slice(1, this.rawContent.length);
 
         if (!this.authorIsBot() && this.isCommand()) {
-            this.command = DiscordCommand.parse(this.rawContent[0]);
+            this.command = Command.parse(this.rawContent[0]);
         }
 
         console.log("Received " + this.command.name + " action");
@@ -34,7 +34,7 @@ class DiscordMessage {
         return this.channel;
     }
 
-    public getCommand(): DiscordCommand {
+    public getCommand(): Command {
         return this.command;
     }
 
@@ -51,4 +51,4 @@ class DiscordMessage {
     }
 }
 
-export default DiscordMessage;
+export default IncomingMessage;

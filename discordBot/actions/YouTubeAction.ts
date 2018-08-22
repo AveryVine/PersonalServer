@@ -1,16 +1,16 @@
 import Action from './Action';
 import DiscordBot from '../DiscordBot';
-import DiscordMessage from '../DiscordMessage';
+import IncomingMessage from '../IncomingMessage';
 import search, { YouTubeSearchResults } from 'youtube-search';
 import ApiKeys from '../../ApiKeys';
-import DiscordRichMessage from '../DiscordRichMessage';
+import RichMessage from '../RichMessage';
 import { RichEmbed } from 'discord.js';
 
 class YouTubeAction implements Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
     args: string[];
 
-    constructor(message: DiscordMessage) {
+    constructor(message: IncomingMessage) {
         this.message = message;
         this.args = message.getArgs();
     }
@@ -33,12 +33,8 @@ class YouTubeAction implements Action {
         if (!err && results) {
             let rawResult = results[0];
             if (rawResult) {
-                let result: YouTubeEntity;
-                if (rawResult.kind.includes('channel')) {
-                    result = new YouTubeChannel(rawResult.channelTitle, rawResult.link, rawResult.thumbnails.default ? rawResult.thumbnails.default.url : undefined);
-                    response = result.createRichMessage();
-                } else if (rawResult.kind.includes('video')) {
-                    result = new YouTubeVideo(rawResult.title, rawResult.channelTitle, rawResult.link, rawResult.thumbnails.default ? rawResult.thumbnails.default.url : undefined);
+                let result = YouTubeEntity.valueOf(rawResult);
+                if (result) {
                     response = result.createRichMessage();
                 } else {
                     response = "Something went wrong!";
@@ -51,63 +47,78 @@ class YouTubeAction implements Action {
             response = "Something went wrong!";
         }
 
+        console.log(this);
         DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
     }
 }
 
-interface YouTubeEntity extends DiscordRichMessage {
-    kind: string;
-    channel: string;
-    url: string;
-    thumbnail: string | undefined;
+enum YouTubeEntityType {
+    CHANNEL = "Channel",
+    VIDEO = "Video",
+    UNKNOWN = "Unknown"
 }
 
-class YouTubeChannel implements YouTubeEntity {
-    kind: string;
+abstract class YouTubeEntity implements RichMessage {
+    type: YouTubeEntityType;
     channel: string;
     url: string;
     thumbnail: string | undefined;
+    response: RichEmbed;
 
-    constructor(channel: string, url: string, thumbnail: string | undefined) {
-        this.kind = "Channel";
-        this.channel = channel;
-        this.url = url;
-        this.thumbnail = thumbnail;
+    protected constructor(result: YouTubeSearchResults) {
+        this.type = YouTubeEntityType.UNKNOWN;
+        this.channel = result.channelTitle;
+        this.url = result.link;
+        this.thumbnail = result.thumbnails.default ? result.thumbnails.default.url : undefined;
+        this.response = new RichEmbed();
     }
 
-    public createRichMessage() {
-        let response = new RichEmbed();
-        response.setAuthor(this.channel.toUpperCase() + this.kind, "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697037-youtube-512.png");
-        response.setColor(0xff0000);
-        if (this.thumbnail) {
-            response.setThumbnail(this.thumbnail);
+    abstract createRichMessage(): RichEmbed;
+
+    public static valueOf(result: YouTubeSearchResults): YouTubeEntity | undefined {
+        switch (result.kind) {
+            case "Channel":
+                return new YouTubeChannel(result);
+            case "Video":
+                return new YouTubeVideo(result);
+            default:
+                return undefined;
         }
-        response.setDescription("------------------------------");
-        response.addField("Channel URL", this.url);
-        response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
-        response.setTimestamp(new Date());
-        return response;
     }
 }
 
-class YouTubeVideo implements YouTubeEntity {
-    kind: string;
-    title: string;
-    channel: string;
-    url: string;
-    thumbnail: string | undefined;
-
-    constructor(title: string, channel: string, url: string, thumbnail: string | undefined) {
-        this.kind = "Video";
-        this.title = title;
-        this.channel = channel;
-        this.url = url;
-        this.thumbnail = thumbnail;
+class YouTubeChannel extends YouTubeEntity {
+    public constructor(result: YouTubeSearchResults) {
+        super(result);
+        this.type = YouTubeEntityType.CHANNEL;
     }
 
     public createRichMessage() {
-        let response = new RichEmbed();
-        return response;
+        this.response.setAuthor(this.channel.toUpperCase() + this.type, "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697037-youtube-512.png");
+        this.response.setColor(0xff0000);
+        if (this.thumbnail) {
+            this.response.setThumbnail(this.thumbnail);
+        }
+        this.response.setDescription("------------------------------");
+        this.response.addField("Channel URL", this.url);
+        this.response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
+        this.response.setTimestamp(new Date());
+
+        return this.response;
+    }
+}
+
+class YouTubeVideo extends YouTubeEntity {
+    title: string;
+
+    constructor(result: YouTubeSearchResults) {
+        super(result);
+        this.type = YouTubeEntityType.VIDEO;
+        this.title = result.title;
+    }
+
+    public createRichMessage() {
+        return this.response;
     }
 }
 

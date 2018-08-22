@@ -1,6 +1,6 @@
 import Action from './Action'
 import DiscordBot from '../DiscordBot';
-import DiscordMessage from '../DiscordMessage';
+import IncomingMessage from '../IncomingMessage';
 
 export enum LeagueActionType {
     SUMMONER = "summoner",
@@ -8,11 +8,11 @@ export enum LeagueActionType {
 }
 
 class LeagueAction implements Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
     args: string[];
     type: LeagueActionType;
 
-    constructor(message: DiscordMessage, type: LeagueActionType) {
+    constructor(message: IncomingMessage, type: LeagueActionType) {
         this.message = message;
         this.args = message.getArgs();
         this.type = type;

@@ -1,11 +1,11 @@
 import Action from './Action';
 import DiscordBot from '../DiscordBot';
-import DiscordMessage from '../DiscordMessage';
+import IncomingMessage from '../IncomingMessage';
 
 class InvalidAction implements Action {
-    message: DiscordMessage;
+    message: IncomingMessage;
 
-    constructor(message: DiscordMessage) {
+    constructor(message: IncomingMessage) {
         this.message = message;
     }
 

@@ -1,7 +1,8 @@
 import { RichEmbed } from 'discord.js';
 
-interface DiscordRichMessage {
+interface RichMessage {
+    response: RichEmbed;
     createRichMessage(): RichEmbed;
 }
 
-export default DiscordRichMessage;
+export default RichMessage;
