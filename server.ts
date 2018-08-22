@@ -10,7 +10,7 @@ app.listen(port, function () {
         ping();
     }, 1500000);
 
-    let discordBot = DiscordBot.getInstance().login();
+    DiscordBot.getInstance().login();
 });
 
 function ping(): void {

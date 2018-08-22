@@ -1,11 +1,12 @@
 import Action from './Action';
 import DiscordBot from '../DiscordBot';
 import DiscordMessage from '../DiscordMessage'
-import { RichEmbed, Message } from 'discord.js';
 
-class PingAction extends Action {
+class PingAction implements Action {
+    message: DiscordMessage;
+
     constructor(message: DiscordMessage) {
-        super(message);
+        this.message = message;
     }
 
     public execute() {

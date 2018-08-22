@@ -1,13 +1,15 @@
 import Action from './Action';
 import DiscordMessage from '../DiscordMessage';
 
-class NoAction extends Action {
+class NoAction implements Action {
+    message: DiscordMessage;
+
     constructor(message: DiscordMessage) {
-        super(message);
+        this.message = message;
     }
 
     public execute() {
-        console.log("Received NO action");
+        console.log("No action to be executed.");
     }
 }
 
