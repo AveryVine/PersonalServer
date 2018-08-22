@@ -15,7 +15,7 @@ class DiscordMessage {
         this.channel = message.channel;
         this.rawContent = message.content.trim().split(' ');
         this.command = DiscordCommand.NO_COMMAND;
-        this.args = this.rawContent.slice(0).splice(0, 1);
+        this.args = this.rawContent.slice(1, this.rawContent.length);
 
         if (!this.authorIsBot() && this.isCommand()) {
             this.command = DiscordCommand.parse(this.rawContent[0]);

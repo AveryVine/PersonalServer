@@ -24,7 +24,7 @@ class DiscordBot {
     }
 
     public sendMessage(message: string | RichEmbed, channel: TextChannel | DMChannel | GroupDMChannel) {
-        console.log("Sending message: " + message);
+        console.log("Sending message: " + message.toString());
         channel.send(message);
     }
 
