@@ -1,10 +1,11 @@
 import Action from './Action';
 import DiscordMessage from '../DiscordMessage';
 import DiscordCommand from '../DiscordCommand';
+import DiscordRichMessage from '../DiscordRichMessage';
 import DiscordBot from '../DiscordBot';
 import { RichEmbed } from 'discord.js';
 
-class HelpAction implements Action, DiscordResponse {
+class HelpAction implements Action, DiscordRichMessage {
     message: DiscordMessage;
 
     constructor(message: DiscordMessage) {
@@ -12,10 +13,10 @@ class HelpAction implements Action, DiscordResponse {
     }
 
     public execute() {
-        this.sendAsMessage();
+        DiscordBot.getInstance().sendMessage(this.createRichMessage(), this.message.getChannel());
     }
 
-    public sendAsMessage() {
+    public createRichMessage() {
         let response = new RichEmbed();
         response.setAuthor("Hi, I'm Alfred!", "https://cdn.discordapp.com/embed/avatars/0.png");
         response.setThumbnail("https://cdn.discordapp.com/embed/avatars/0.png");
@@ -35,7 +36,7 @@ class HelpAction implements Action, DiscordResponse {
         response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
         response.setTimestamp(new Date());
 
-        DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
+        return response;
     }
 }
 
