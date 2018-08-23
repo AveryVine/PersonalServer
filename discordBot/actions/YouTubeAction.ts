@@ -23,7 +23,9 @@ class YouTubeAction implements Action {
                 maxResults: 1,
                 key: ApiKeys.getInstance().getKeys().get('google')
             },
-            this.searchResults
+            (err: Error, results: YouTubeSearchResults[] | undefined) => {
+                this.searchResults(err, results);
+            }
         );
     }
 
@@ -47,7 +49,6 @@ class YouTubeAction implements Action {
             response = "Something went wrong!";
         }
 
-        console.log(this);
         DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
     }
 }
@@ -77,9 +78,9 @@ abstract class YouTubeEntity implements RichMessage {
 
     public static valueOf(result: YouTubeSearchResults): YouTubeEntity | undefined {
         switch (result.kind) {
-            case "Channel":
+            case "youtube#channel":
                 return new YouTubeChannel(result);
-            case "Video":
+            case "youtube#video":
                 return new YouTubeVideo(result);
             default:
                 return undefined;
@@ -94,14 +95,14 @@ class YouTubeChannel extends YouTubeEntity {
     }
 
     public createRichMessage() {
-        this.response.setAuthor(this.channel.toUpperCase() + this.type, "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697037-youtube-512.png");
+        this.response.setAuthor(this.channel.toUpperCase() + " - " + this.type);
         this.response.setColor(0xff0000);
         if (this.thumbnail) {
             this.response.setThumbnail(this.thumbnail);
         }
         this.response.setDescription("------------------------------");
         this.response.addField("Channel URL", this.url);
-        this.response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
+        this.response.setFooter("I am a bot, beep boop.", "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697037-youtube-512.png");
         this.response.setTimestamp(new Date());
 
         return this.response;
@@ -118,6 +119,17 @@ class YouTubeVideo extends YouTubeEntity {
     }
 
     public createRichMessage() {
+        this.response.setAuthor(this.title.toUpperCase() + " - " + this.type);
+        this.response.setColor(0xff0000);
+        if (this.thumbnail) {
+            this.response.setThumbnail(this.thumbnail);
+        }
+        this.response.setDescription("------------------------------");
+        this.response.addField("Video URL", this.url);
+        this.response.addField("Channel Name", this.channel);
+        this.response.setFooter("I am a bot, beep boop.", "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697037-youtube-512.png");
+        this.response.setTimestamp(new Date());
+
         return this.response;
     }
 }

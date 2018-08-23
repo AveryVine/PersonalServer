@@ -19,7 +19,7 @@ class HelpAction implements Action, RichMessage {
     }
 
     public createRichMessage() {
-        this.response.setAuthor("Hi, I'm Alfred!", "https://cdn.discordapp.com/embed/avatars/0.png");
+        this.response.setAuthor("Hi, I'm Alfred!");
         this.response.setThumbnail("https://cdn.discordapp.com/embed/avatars/0.png");
         this.response.setDescription("------------------------------\nI'm a bot that can help you with many things, most of which being related to League of Legends. My available commands are listed below. Have fun!");
 
