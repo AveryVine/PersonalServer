@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "heroku local",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "author": "Avery Vine",
   "license": "ISC",
