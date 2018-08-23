@@ -9,4 +9,4 @@ deploy:
   on:
     branch: master
   api_key:
-    secure: $HEROKU_API_KEY
+    - $HEROKU_API_KEY
