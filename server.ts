@@ -10,7 +10,9 @@ app.listen(port, function () {
         ping();
     }, 1500000);
 
-    DiscordBot.getInstance().login();
+    if (process.env.ENABLE_DISCORD_BOT) {
+        DiscordBot.getInstance().login();
+    }
 });
 
 function ping(): void {
