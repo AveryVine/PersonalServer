@@ -1,5 +1,5 @@
-import Action from './Action';
-import IncomingMessage from '../IncomingMessage';
+import Action from './Action2';
+import IncomingMessage from '../IncomingMessage2';
 
 class NoAction implements Action {
     message: IncomingMessage;

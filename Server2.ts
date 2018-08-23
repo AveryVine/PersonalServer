@@ -1,5 +1,5 @@
-import app from "./App";
-import DiscordBot from './DiscordBot/DiscordBot';
+import app from "./App2";
+import DiscordBot from './discordBot/DiscordBot2';
 import request from 'request';
 
 const port = (process.env.PORT || 5000);

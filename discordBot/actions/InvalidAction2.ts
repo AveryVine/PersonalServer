@@ -1,6 +1,6 @@
-import Action from './Action';
-import DiscordBot from '../DiscordBot';
-import IncomingMessage from '../IncomingMessage';
+import Action from './Action2';
+import DiscordBot from '../DiscordBot2';
+import IncomingMessage from '../IncomingMessage2';
 
 class InvalidAction implements Action {
     message: IncomingMessage;

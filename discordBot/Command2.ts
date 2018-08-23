@@ -1,13 +1,13 @@
-import Action from './actions/Action';
-import PingAction from './actions/PingAction';
-import HelpAction from './actions/HelpAction';
-import LeagueAction from './actions/LeagueAction';
-import YouTubeAction from './actions/YouTubeAction';
-import TwitchAction from './actions/TwitchAction';
-import InvalidAction from './actions/InvalidAction';
-import NoAction from './actions/NoAction';
-import { LeagueActionType } from './actions/LeagueAction';
-import IncomingMessage from './IncomingMessage';
+import Action from './actions/Action2';
+import PingAction from './actions/PingAction2';
+import HelpAction from './actions/HelpAction2';
+import LeagueAction from './actions/LeagueAction2';
+import YouTubeAction from './actions/YouTubeAction2';
+import TwitchAction from './actions/TwitchAction2';
+import InvalidAction from './actions/InvalidAction2';
+import NoAction from './actions/NoAction2';
+import { LeagueActionType } from './actions/LeagueAction2';
+import IncomingMessage from './IncomingMessage2';
 
 export class Command {
     readonly name: string;
