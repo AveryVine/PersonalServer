@@ -1,4 +1,4 @@
-import IncomingMessage from "../IncomingMessage2";
+import IncomingMessage from "../IncomingMessage";
 
 interface Action {
     message: IncomingMessage;

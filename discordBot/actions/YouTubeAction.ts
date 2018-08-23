@@ -1,9 +1,9 @@
-import Action from './Action2';
-import DiscordBot from '../DiscordBot2';
-import IncomingMessage from '../IncomingMessage2';
+import Action from './Action';
+import DiscordBot from '../DiscordBot';
+import IncomingMessage from '../IncomingMessage';
 import search, { YouTubeSearchResults } from 'youtube-search';
-import ApiKeys from '../../ApiKeys2';
-import RichMessage from '../RichMessage2';
+import ApiKeys from '../../ApiKeys';
+import RichMessage from '../RichMessage';
 import { RichEmbed } from 'discord.js';
 
 class YouTubeAction implements Action {

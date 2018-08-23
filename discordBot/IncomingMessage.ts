@@ -1,6 +1,6 @@
 import { Message, User, TextChannel, DMChannel, GroupDMChannel } from 'discord.js'
-import Action from './actions/Action2';
-import Command from './Command2';
+import Action from './actions/Action';
+import Command from './Command';
 
 class IncomingMessage {
     private author: User;

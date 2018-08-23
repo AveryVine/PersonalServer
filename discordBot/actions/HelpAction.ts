@@ -1,8 +1,8 @@
-import Action from './Action2';
-import IncomingMessage from '../IncomingMessage2';
-import Command from '../Command2';
-import RichMessage from '../RichMessage2';
-import DiscordBot from '../DiscordBot2';
+import Action from './Action';
+import IncomingMessage from '../IncomingMessage';
+import Command from '../Command';
+import RichMessage from '../RichMessage';
+import DiscordBot from '../DiscordBot';
 import { RichEmbed } from 'discord.js';
 
 class HelpAction implements Action, RichMessage {
