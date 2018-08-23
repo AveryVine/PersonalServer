@@ -6,7 +6,6 @@
   "scripts": {
     "start": "heroku local",
     "build": "tsc",
-    "postinstall": "npm run build"
   },
   "author": "Avery Vine",
   "license": "ISC",
