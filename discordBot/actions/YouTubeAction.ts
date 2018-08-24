@@ -39,12 +39,14 @@ class YouTubeAction implements Action {
                 if (result) {
                     response = result.createRichMessage();
                 } else {
+                    console.log("Failed to parse YouTubeSearchResults object");
                     response = "Something went wrong!";
                 }
             } else {
                 response = "No results found.";
             }
         } else {
+            console.log("Something went wrong!");
             console.log(err);
             response = "Something went wrong!";
         }
