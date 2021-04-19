@@ -1,4 +1,4 @@
-import { Message, User, TextChannel, DMChannel, GroupDMChannel } from 'discord.js'
+import { Message, User, TextChannel, DMChannel, GroupDMChannel, MessageMentions } from 'discord.js'
 import Action from './actions/Action';
 import Command from './Command';
 
@@ -42,12 +42,16 @@ class IncomingMessage {
         return this.args;
     }
 
+    public getAuthorId() {
+        return this.author.id;
+    }
+
     public authorIsBot() {
         return this.author.bot;
     }
 
     private isCommand() {
-        return this.rawContent[0] !== undefined && this.rawContent[0].startsWith('!');
+        return this.rawContent[0] !== undefined && this.rawContent[0].startsWith('%');
     }
 }
 

@@ -1,13 +1,14 @@
 import Action from './actions/Action';
 import PingAction from './actions/PingAction';
 import HelpAction from './actions/HelpAction';
+import AddThemeAction from './actions/AddThemeAction';
 import LeagueAction from './actions/LeagueAction';
 import YouTubeAction from './actions/YouTubeAction';
 import TwitchAction from './actions/TwitchAction';
-import InvalidAction from './actions/InvalidAction';
 import NoAction from './actions/NoAction';
 import { LeagueActionType } from './actions/LeagueAction';
 import IncomingMessage from './IncomingMessage';
+import RemoveThemeAction from './actions/RemoveThemeAction';
 
 export class Command {
     readonly name: string;
@@ -18,63 +19,39 @@ export class Command {
     private static commands: { [name: string]: Command } = {};
 
     static readonly PING = new Command(
-        '!ping',
+        '%ping',
         'Tests your connection to me!',
-        '!ping',
+        '%ping',
         (message: IncomingMessage) => {
             return new PingAction(message);
         }
     );
     static readonly HELP = new Command(
-        '!help',
+        '%help',
         'Returns the list of accepted commands, with descriptions.',
-        '!help',
+        '%help',
         (message: IncomingMessage) => {
             return new HelpAction(message);
         }
     );
-    static readonly SUMMONER = new Command(
-        '!summoner',
-        'Provides LoL details for the given summoner.',
-        '!summoner Ace Damasos',
+    static readonly ADD_THEME = new Command(
+        '%addtheme',
+        'Sets the theme music that plays when you join a voice channel.',
+        '%addtheme https://www.youtube.com/watch?v=2D-ZO2rGcSA',
         (message: IncomingMessage) => {
-            return new LeagueAction(message, LeagueActionType.SUMMONER);
+            return new AddThemeAction(message);
         }
-    );
-    static readonly BANS = new Command(
-        '!bans',
-        'Provides the latest optimal ban information for the given ELO.',
-        '!bans platinum',
+    )
+    static readonly REMOVE_THEME = new Command(
+        '%removetheme',
+        'Removes any theme music you may have set.',
+        '%removetheme',
         (message: IncomingMessage) => {
-            return new LeagueAction(message, LeagueActionType.BANS);
+            return new RemoveThemeAction(message);
         }
-    );
-    static readonly YOUTUBE = new Command(
-        '!youtube',
-        'Searches YouTube for the given query.',
-        '!youtube Thomas the Dank Engine',
-        (message: IncomingMessage) => {
-            return new YouTubeAction(message);
-        }
-    );
-    static readonly TWITCH = new Command(
-        '!twitch',
-        'Searches Twitch for the given query.',
-        '!twitch imaqtpie',
-        (message: IncomingMessage) => {
-            return new TwitchAction(message);
-        }
-    );
-    static readonly INVALID = new Command(
-        '!invalid',
-        undefined,
-        undefined,
-        (message: IncomingMessage) => {
-            return new InvalidAction(message);
-        }
-    );
+    )
     static readonly NO_COMMAND = new Command(
-        '!noCommand',
+        '%noCommand',
         undefined,
         undefined,
         (message: IncomingMessage) => {
@@ -98,7 +75,7 @@ export class Command {
     public static parse(data: string): Command {
         let command = Command.commands[data];
         if (!command) {
-            command = Command.INVALID;
+            command = Command.NO_COMMAND;
         }
         return command;
     }

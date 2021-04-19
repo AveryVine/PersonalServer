@@ -1,5 +1,5 @@
 import app from "./App";
-import DiscordBot from './discordBot/DiscordBot';
+import Herald from './herald/Herald';
 import request from 'request';
 
 const port = (process.env.PORT || 5000);
@@ -11,7 +11,7 @@ app.listen(port, function () {
     }, 1500000);
 
     if (process.env.ENABLE_DISCORD_BOT) {
-        DiscordBot.getInstance().login();
+        Herald.getInstance().login();
     }
 });
 

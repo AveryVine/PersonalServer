@@ -1,5 +1,5 @@
 import Action from './Action'
-import DiscordBot from '../DiscordBot';
+import Herald from '../Herald';
 import IncomingMessage from '../IncomingMessage';
 
 export enum LeagueActionType {
@@ -20,7 +20,7 @@ class LeagueAction implements Action {
 
     public execute() {
         console.log("Type: " + this.type.toString());
-        DiscordBot.getInstance().sendMessage("Feature coming soon!", this.message.getChannel());
+        Herald.getInstance().sendMessage("Feature coming soon!", this.message.getChannel());
     }
 }
 

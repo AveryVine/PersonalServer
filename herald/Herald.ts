@@ -1,10 +1,10 @@
 import * as Discord from 'discord.js';
 import { TextChannel, DMChannel, GroupDMChannel, RichEmbed } from 'discord.js';
 import DiscordMessage from './IncomingMessage';
-import ApiKeys from '../ApiKeys';
+import AudioPlayback from './AudioPlayback';
 
-class DiscordBot {
-    private static instance: DiscordBot;
+class Herald {
+    private static instance: Herald;
     private client: Discord.Client;
 
     private constructor() {
@@ -12,15 +12,22 @@ class DiscordBot {
 
         this.client.on('ready', () => {
             console.log('Discord Bot powered on.');
+            this.client.user.setActivity("%help", {
+                type: "PLAYING"
+            });
         });
 
         this.client.on('message', (message) => {
             new DiscordMessage(message).executeAction()
         });
+
+        this.client.on('voiceStateUpdate', async (oldMember, newMember) => {
+            AudioPlayback.getInstance().voiceStateUpdate(oldMember, newMember);
+        });
     }
 
     public login() {
-        this.client.login(ApiKeys.getInstance().getKeys().get('discord'));
+        this.client.login(process.env.DISCORD);
     }
 
     public sendMessage(message: string | RichEmbed, channel: TextChannel | DMChannel | GroupDMChannel) {
@@ -29,11 +36,11 @@ class DiscordBot {
     }
 
     public static getInstance() {
-        if (!DiscordBot.instance) {
-            DiscordBot.instance = new DiscordBot();
+        if (!Herald.instance) {
+            Herald.instance = new Herald();
         }
-        return DiscordBot.instance;
+        return Herald.instance;
     }
 }
 
-export default DiscordBot;
+export default Herald;

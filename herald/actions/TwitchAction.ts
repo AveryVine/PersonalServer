@@ -1,6 +1,6 @@
 import Action from './Action';
 import ApiKeys from '../../ApiKeys';
-import DiscordBot from '../DiscordBot';
+import Herald from '../Herald';
 import RichMessage from '../RichMessage';
 import IncomingMessage from '../IncomingMessage';
 import request from 'request';
@@ -62,7 +62,7 @@ class TwitchAction implements Action {
         }
 
         if (response) {
-            DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
+            Herald.getInstance().sendMessage(response, this.message.getChannel());
         }
     }
 
@@ -82,7 +82,7 @@ class TwitchAction implements Action {
             response = "Something went wrong!";
         }
 
-        DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
+        Herald.getInstance().sendMessage(response, this.message.getChannel());
     }
 }
 

@@ -1,5 +1,5 @@
 import Action from './Action';
-import DiscordBot from '../DiscordBot';
+import Herald from '../Herald';
 import IncomingMessage from '../IncomingMessage'
 
 class PingAction implements Action {
@@ -10,7 +10,7 @@ class PingAction implements Action {
     }
 
     public execute() {
-        DiscordBot.getInstance().sendMessage("Pong", this.message.getChannel());
+        Herald.getInstance().sendMessage("Pong", this.message.getChannel());
     }
 }
 

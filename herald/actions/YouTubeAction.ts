@@ -1,5 +1,5 @@
 import Action from './Action';
-import DiscordBot from '../DiscordBot';
+import Herald from '../Herald';
 import IncomingMessage from '../IncomingMessage';
 import search, { YouTubeSearchResults } from 'youtube-search';
 import ApiKeys from '../../ApiKeys';
@@ -51,7 +51,7 @@ class YouTubeAction implements Action {
             response = "Something went wrong!";
         }
 
-        DiscordBot.getInstance().sendMessage(response, this.message.getChannel());
+        Herald.getInstance().sendMessage(response, this.message.getChannel());
     }
 }
 
