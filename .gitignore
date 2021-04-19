@@ -75,3 +75,5 @@ typings/
 # other
 .DS_Store
 dist/
+
+package-lock.json
