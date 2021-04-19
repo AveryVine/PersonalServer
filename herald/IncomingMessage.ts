@@ -15,7 +15,7 @@ class IncomingMessage {
         this.author = message.author;
         this.channel = message.channel;
         this.mentions = message.mentions;
-        this.rawContent = message.content.trim().split(' ');
+        this.rawContent = message.content.trim().split(' ').filter(content => content.length > 0);
         this.command = Command.NO_COMMAND;
         this.args = this.rawContent.slice(1, this.rawContent.length).filter(arg => !arg.startsWith("<@!"));
 
