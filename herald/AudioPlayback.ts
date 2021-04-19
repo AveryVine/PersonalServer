@@ -5,7 +5,7 @@ import Database from "./Database";
 class AudioPlayback {
     private static instance: AudioPlayback;
     private defaultLength = 15;
-    private defaultVolume = 100;
+    private defaultVolume = 0.1;
 
     private constructor() {
 
@@ -32,12 +32,13 @@ class AudioPlayback {
                 let voiceChannel = newMember.voiceChannel;
                 console.log(`${newMember.displayName} has joined ${newMember.voiceChannel.name}.`);
                 let connection = await voiceChannel.join();
-                let stream = ytdl(song.link);
+                let stream = ytdl(String(song.link));
                 let dispatcher = connection.playStream(stream);
                 dispatcher.on('start', () => {
                     if (length !== -1) {
                         setTimeout(() => {
                             dispatcher.end();
+                            voiceChannel.leave();
                         }, (length || this.defaultLength) * 1000);
                     }
                 });
