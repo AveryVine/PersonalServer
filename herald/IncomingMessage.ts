@@ -5,6 +5,7 @@ import Command from './Command';
 class IncomingMessage {
     private author: User;
     private channel: TextChannel | DMChannel | GroupDMChannel;
+    private mentions: MessageMentions;
     private rawContent: string[];
     private command: Command;
     private args: string[];
@@ -13,6 +14,7 @@ class IncomingMessage {
     constructor(message: Message) {
         this.author = message.author;
         this.channel = message.channel;
+        this.mentions = message.mentions;
         this.rawContent = message.content.trim().split(' ');
         this.command = Command.NO_COMMAND;
         this.args = this.rawContent.slice(1, this.rawContent.length);
@@ -34,6 +36,10 @@ class IncomingMessage {
         return this.channel;
     }
 
+    public getMentions(): MessageMentions {
+        return this.mentions;
+    }
+
     public getCommand(): Command {
         return this.command;
     }
@@ -42,8 +48,8 @@ class IncomingMessage {
         return this.args;
     }
 
-    public getAuthorId() {
-        return this.author.id;
+    public getAuthor() {
+        return this.author;
     }
 
     public authorIsBot() {
