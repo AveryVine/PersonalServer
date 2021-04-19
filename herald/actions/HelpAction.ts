@@ -28,9 +28,6 @@ class HelpAction implements Action, RichMessage {
             let command = commands[key];
             if (command.description) {
                 let fieldValue = command.description;
-                // if (command.example) {
-                //     fieldValue += '\n`' + command.example + '`';
-                // }
                 this.response.addField(command.name.toUpperCase(), fieldValue, true);
             }
         }

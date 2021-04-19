@@ -17,7 +17,7 @@ class IncomingMessage {
         this.mentions = message.mentions;
         this.rawContent = message.content.trim().split(' ');
         this.command = Command.NO_COMMAND;
-        this.args = this.rawContent.slice(1, this.rawContent.length);
+        this.args = this.rawContent.slice(1, this.rawContent.length).filter(arg => !arg.startsWith("<@!"));
 
         if (!this.authorIsBot() && this.isCommand()) {
             this.command = Command.parse(this.rawContent[0]);
