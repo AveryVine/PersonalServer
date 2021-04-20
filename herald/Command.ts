@@ -9,6 +9,7 @@ import NoAction from './actions/NoAction';
 import { LeagueActionType } from './actions/LeagueAction';
 import IncomingMessage from './IncomingMessage';
 import RemoveThemeAction from './actions/RemoveThemeAction';
+import ThemeAction from './actions/Theme';
 
 export class Command {
     readonly name: string;
@@ -48,6 +49,14 @@ export class Command {
         '%removetheme',
         (message: IncomingMessage) => {
             return new RemoveThemeAction(message);
+        }
+    )
+    static readonly GET_THEME = new Command(
+        '%theme',
+        'Output the link to the theme assigned to you.',
+        '%theme',
+        (message: IncomingMessage) => {
+            return new ThemeAction(message);
         }
     )
     static readonly NO_COMMAND = new Command(
