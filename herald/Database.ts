@@ -24,8 +24,13 @@ class Database {
     public async getTheme(userId: String) {
         let query = "select link from herald where userid='" + userId + "'";
         let result = await this.client.query(query);
-        console.log("Retrieved theme for user " + userId + ": " + String(result.rows[0].link));
-        return result.rows[0];
+        let theme = result.rows[0];
+        if (theme) {
+            console.log("Retrieved theme for user " + userId + ": " + String(theme.link));
+        } else {
+            console.log("No theme found for user " + userId);
+        }
+        return theme;
     }
 
     public async addTheme(userId: String, youtubeLink: String) {

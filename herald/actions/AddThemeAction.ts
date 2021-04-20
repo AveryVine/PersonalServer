@@ -10,26 +10,23 @@ class AddThemeAction implements Action, RichMessage {
     response: RichEmbed;
     args: string[];
     targetUser: User;
-    author: User;
 
     constructor(message: IncomingMessage) {
         this.message = message;
         this.response = new RichEmbed();
         this.args = message.getArgs();
-        this.targetUser = this.message.getMentions().users.first();
-        this.author = this.message.getAuthor();
+        this.targetUser = this.message.getMentions().users.first() || this.message.getAuthor();
     }
 
     public execute() {
-        let targetId = this.targetUser.id || this.author.id;
-        console.log("Attempting to set theme for user " + targetId + " with args: " + this.args.join(' '));
+        console.log("Attempting to set theme for user " + this.targetUser.id + " with args: " + this.args.join(' '));
         if (this.args[0]) {
-            Database.getInstance().getTheme(targetId).then((existingTheme) => {
+            Database.getInstance().getTheme(this.targetUser.id).then((existingTheme) => {
                 if (existingTheme) {
-                    Database.getInstance().updateTheme(targetId, this.args[0]);
+                    Database.getInstance().updateTheme(this.targetUser.id, this.args[0]);
                     Herald.getInstance().sendMessage(this.createRichMessage(true), this.message.getChannel());
                 } else {
-                    Database.getInstance().addTheme(targetId, this.args[0]);
+                    Database.getInstance().addTheme(this.targetUser.id, this.args[0]);
                     Herald.getInstance().sendMessage(this.createRichMessage(true), this.message.getChannel());
                 }
             });
@@ -40,7 +37,7 @@ class AddThemeAction implements Action, RichMessage {
 
     public createRichMessage(success: Boolean) {
         if (success) {
-            let user = this.targetUser || this.author;
+            let user = this.targetUser
             this.response.setTitle("Theme Set");
             this.response.setDescription("${user.username}, you're all set! Your theme music will play when you join a voice channel. The default duration is 15 seconds — to change the length, use `%duration`.");
         } else {

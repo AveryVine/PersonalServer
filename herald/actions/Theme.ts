@@ -9,31 +9,28 @@ class ThemeAction implements Action, RichMessage {
     message: IncomingMessage;
     response: RichEmbed;
     targetUser: User;
-    author: User;
-    theme: String | undefined;
+    theme: any;
 
     constructor(message: IncomingMessage) {
         this.message = message;
         this.response = new RichEmbed();
-        this.targetUser = this.message.getMentions().users.first();
-        this.author = this.message.getAuthor();
+        this.targetUser = this.message.getMentions().users.first() || this.message.getAuthor();
         this.theme = undefined;
     }
 
     public execute() {
-        let targetId = this.targetUser.id || this.author.id;
-        console.log("Attempting to get theme for user " + targetId);
-        Database.getInstance().getTheme(targetId).then((theme) => {
-            this.theme = String(theme.link);
+        console.log("Attempting to get theme for user " + this.targetUser.id);
+        Database.getInstance().getTheme(this.targetUser.id).then((theme) => {
+            this.theme = theme
             Herald.getInstance().sendMessage(this.createRichMessage(), this.message.getChannel());
         });
     }
 
     public createRichMessage() {
-        let user = this.targetUser || this.author;
+        let user = this.targetUser;
         this.response.setTitle("Theme");
         if (this.theme) {
-            this.response.setDescription("${user.username}, your theme is: " + this.theme);
+            this.response.setDescription("${user.username}, your theme is: " + String(this.theme.link));
         } else {
             this.response.setDescription("${user.username}, you don't have a theme set.");
         }
