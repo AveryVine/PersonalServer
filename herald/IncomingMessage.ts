@@ -29,7 +29,11 @@ class IncomingMessage {
     }
 
     public executeAction() {
-        this.action.execute();
+        try {
+            this.action.execute();
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     public getChannel(): TextChannel | DMChannel | GroupDMChannel {
