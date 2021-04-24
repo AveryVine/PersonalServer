@@ -30,9 +30,9 @@ class ThemeAction implements Action, RichMessage {
         let user = this.targetUser;
         this.response.setTitle("Theme");
         if (this.themeInfo) {
-            this.response.setDescription("${user.username}, your theme is: " + String(this.themeInfo.link) + " (playback duration: " + Number(this.themeInfo.duration) + " seconds)");
+            this.response.setDescription(`${user.username}, your theme is: ` + String(this.themeInfo.link) + ` (playback duration: ` + Number(this.themeInfo.duration) + ` seconds)`);
         } else {
-            this.response.setDescription("${user.username}, you don't have a theme set.");
+            this.response.setDescription(`${user.username}, you don't have a theme set.`);
         }
         this.response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
         this.response.setTimestamp(new Date());

@@ -25,7 +25,7 @@ class RemoveThemeAction implements Action, RichMessage {
     public createRichMessage() {
         let user = this.targetUser;
         this.response.setTitle("Theme Removed");
-        this.response.setDescription("${user.username}, you're all set! Your theme music was removed.");
+        this.response.setDescription(`${user.username}, you're all set! Your theme music was removed.`);
         this.response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
         this.response.setTimestamp(new Date());
         return this.response;

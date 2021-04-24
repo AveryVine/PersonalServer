@@ -54,10 +54,10 @@ class DurationAction implements Action, RichMessage {
         if (success) {
             let user = this.targetUser
             this.response.setTitle("Theme Duration Set");
-            this.response.setDescription("${user.username}, you're all set! Your theme music will play for " + this.duration + " seconds.");
+            this.response.setDescription(`${user.username}, you're all set! Your theme music will play for ` + this.duration + ` seconds.`);
         } else {
             this.response.setTitle("Failed to Set Theme Duration");
-            this.response.setDescription("Whoops, the theme duration wasn't set! " + errorMessage);
+            this.response.setDescription(`Whoops, the theme duration wasn't set! ` + errorMessage);
         }
         this.response.setFooter("I am a bot, beep boop.", "https://cdn.discordapp.com/embed/avatars/0.png");
         this.response.setTimestamp(new Date());
