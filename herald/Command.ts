@@ -10,6 +10,7 @@ import { LeagueActionType } from './actions/LeagueAction';
 import IncomingMessage from './IncomingMessage';
 import RemoveThemeAction from './actions/RemoveThemeAction';
 import ThemeAction from './actions/Theme';
+import DurationAction from './actions/DurationAction';
 
 export class Command {
     readonly name: string;
@@ -53,10 +54,18 @@ export class Command {
     )
     static readonly GET_THEME = new Command(
         '%theme',
-        'Output the link to the theme assigned to you.',
+        'Outputs the link to the theme assigned to you.',
         '%theme',
         (message: IncomingMessage) => {
             return new ThemeAction(message);
+        }
+    )
+    static readonly SET_DURATION = new Command(
+        '%duration',
+        'Sets the duration of your theme music.',
+        '%duration 20s',
+        (message: IncomingMessage) => {
+            return new DurationAction(message);
         }
     )
     static readonly NO_COMMAND = new Command(

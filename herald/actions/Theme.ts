@@ -9,19 +9,19 @@ class ThemeAction implements Action, RichMessage {
     message: IncomingMessage;
     response: RichEmbed;
     targetUser: User;
-    theme: any;
+    themeInfo: any;
 
     constructor(message: IncomingMessage) {
         this.message = message;
         this.response = new RichEmbed();
         this.targetUser = this.message.getMentions().users.first() || this.message.getAuthor();
-        this.theme = undefined;
+        this.themeInfo = undefined;
     }
 
     public execute() {
         console.log("Attempting to get theme for user " + this.targetUser.id);
-        Database.getInstance().getTheme(this.targetUser.id).then((theme) => {
-            this.theme = theme
+        Database.getInstance().getTheme(this.targetUser.id).then((themeInfo) => {
+            this.themeInfo = themeInfo
             Herald.getInstance().sendMessage(this.createRichMessage(), this.message.getChannel());
         });
     }
@@ -29,8 +29,8 @@ class ThemeAction implements Action, RichMessage {
     public createRichMessage() {
         let user = this.targetUser;
         this.response.setTitle("Theme");
-        if (this.theme) {
-            this.response.setDescription("${user.username}, your theme is: " + String(this.theme.link));
+        if (this.themeInfo) {
+            this.response.setDescription("${user.username}, your theme is: " + String(this.themeInfo.link) + " (playback duration: " + Number(this.themeInfo.duration) + " seconds)");
         } else {
             this.response.setDescription("${user.username}, you don't have a theme set.");
         }

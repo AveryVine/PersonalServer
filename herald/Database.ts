@@ -22,19 +22,19 @@ class Database {
     }
 
     public async getTheme(userId: String) {
-        let query = "select link from herald where userid='" + userId + "'";
+        let query = "select link, duration from herald where userid='" + userId + "'";
         let result = await this.client.query(query);
-        let theme = result.rows[0];
-        if (theme) {
-            console.log("Retrieved theme for user " + userId + ": " + String(theme.link));
+        let themeInfo = result.rows[0];
+        if (themeInfo) {
+            console.log("Retrieved theme for user " + userId + ": " + String(themeInfo.link) + " (duration: " + Number(themeInfo.duration) + ")");
         } else {
             console.log("No theme found for user " + userId);
         }
-        return theme;
+        return themeInfo;
     }
 
     public async addTheme(userId: String, youtubeLink: String) {
-        let query = "insert into herald values('" + userId + "', '" + youtubeLink + "')";
+        let query = "insert into herald values('" + userId + "', '" + youtubeLink + "', 15)";
         await this.client.query(query);
         console.log("Added theme for user " + userId + ": " + youtubeLink);
     }
@@ -49,6 +49,12 @@ class Database {
         let query = "delete from herald where userid='" + userId + "'";
         await this.client.query(query);
         console.log("Removed theme for user " + userId);
+    }
+
+    public async setDuration(userId: String, duration: Number) {
+        let query = "update herald set duration=" + duration + " where userid='" + userId + "'";
+        await this.client.query(query);
+        console.log("Updated duration for user " + userId + ": " + duration);
     }
 }
 

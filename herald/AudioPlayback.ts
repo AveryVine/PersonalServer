@@ -4,7 +4,7 @@ import Database from "./Database";
 
 class AudioPlayback {
     private static instance: AudioPlayback;
-    private defaultLength = 15;
+    private defaultDuration = 15;
     private defaultVolume = 0.1;
 
     private constructor() {
@@ -19,30 +19,33 @@ class AudioPlayback {
     }
 
     public async voiceStateUpdate(oldMember: GuildMember, newMember: GuildMember) {
-        Database.getInstance().getTheme(newMember.id).then(async (song) => {
-            let length: any = undefined;
+        Database.getInstance().getTheme(newMember.id).then(async (themeInfo) => {
+            if (!themeInfo) return;
+            let link = String(themeInfo.link);
+            let duration = Number(themeInfo.duration);
             let volume: any = undefined;
             let mute = false;
 
-            if (!song) return;
             if (mute) {
                 // TODO: add muting functionality
             }
             if (newMember.voiceChannel !== oldMember.voiceChannel && newMember.voiceChannel) {
                 let voiceChannel = newMember.voiceChannel;
                 console.log(`${newMember.displayName} has joined ${newMember.voiceChannel.name}.`);
-                let connection = await voiceChannel.join();
-                let stream = ytdl(String(song.link));
-                let dispatcher = connection.playStream(stream);
-                dispatcher.on('start', () => {
-                    if (length !== -1) {
+                try {
+                    let connection = await voiceChannel.join();
+                    let stream = ytdl(link);
+                    let dispatcher = connection.playStream(stream);
+                    dispatcher.on('start', () => {
                         setTimeout(() => {
                             dispatcher.end();
                             voiceChannel.leave();
-                        }, (length || this.defaultLength) * 1000);
-                    }
-                });
-                dispatcher.setVolume(volume || this.defaultVolume);
+                        }, (duration || this.defaultDuration) * 1000);
+                    });
+                    dispatcher.setVolume(volume || this.defaultVolume);
+                } catch (e) {
+                    console.log("Failed to join voice channel: " + e);
+                }
             }
             if (!newMember.voiceChannel) {
                 console.log(`${newMember.displayName} has left ${oldMember.voiceChannel.name}.`);
