@@ -26,7 +26,7 @@ class DurationAction implements Action, RichMessage {
 
     public execute() {
         console.log("Attempting to set theme duration for user " + this.targetUser.id + " with args: " + this.args.join(' '));
-        let durationMatches = this.args.join('').match(/\d/g);
+        let durationMatches = this.args.join('').match(/^0$|^-?[1-9]\d*(\.\d+)?$/);
         if (durationMatches) {
             let duration = durationMatches.join('');
             if (duration && +duration >= this.minDuration && +duration <= this.maxDuration) {
