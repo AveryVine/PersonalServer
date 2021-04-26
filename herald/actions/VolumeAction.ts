@@ -33,8 +33,13 @@ class VolumeAction implements Action, RichMessage {
                 this.volume = +volume;
                 Database.getInstance().getTheme(this.targetUser.id).then((theme) => {
                     if (theme) {
-                        Database.getInstance().setVolume(this.targetUser.id, this.volume);
-                        Herald.getInstance().sendMessage(this.createRichMessage(true, ""), this.message.getChannel());
+                        if (this.targetUser.id === "187235588687134729" && this.volume > 100) {
+                            let errorMessage = "Jacob I am not letting you set your music above 100%, it's deafening enough already.";
+                            Herald.getInstance().sendMessage(this.createRichMessage(false, errorMessage), this.message.getChannel());
+                        } else {
+                            Database.getInstance().setVolume(this.targetUser.id, this.volume);
+                            Herald.getInstance().sendMessage(this.createRichMessage(true, ""), this.message.getChannel());
+                        }
                     } else {
                         let errorMessage = "It looks like you don't have a theme set! Use `%addtheme` to get started.";
                         Herald.getInstance().sendMessage(this.createRichMessage(false, errorMessage), this.message.getChannel());
