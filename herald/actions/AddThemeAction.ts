@@ -39,7 +39,7 @@ class AddThemeAction implements Action, RichMessage {
         if (success) {
             let user = this.targetUser
             this.response.setTitle("Theme Set");
-            this.response.setDescription(`${user.username}, you're all set! Your theme music will play when you join a voice channel. The default duration is 15 seconds — to change the length, use \`%duration\`.`);
+            this.response.setDescription(`${user.username}, you're all set! Your theme music will play when you join a voice channel.`);
         } else {
             this.response.setTitle("Failed to Set Theme");
             this.response.setDescription(`Whoops, the theme wasn't set! Make sure to pass in a YouTube link. For example: \`%addtheme https://www.youtube.com/watch?v=2D-ZO2rGcSA\``);
