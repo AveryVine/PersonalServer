@@ -9,8 +9,9 @@ import NoAction from './actions/NoAction';
 import { LeagueActionType } from './actions/LeagueAction';
 import IncomingMessage from './IncomingMessage';
 import RemoveThemeAction from './actions/RemoveThemeAction';
-import ThemeAction from './actions/Theme';
+import ThemeAction from './actions/ThemeAction';
 import DurationAction from './actions/DurationAction';
+import VolumeAction from './actions/VolumeAction';
 
 export class Command {
     readonly name: string;
@@ -66,6 +67,15 @@ export class Command {
         '%duration 20s',
         (message: IncomingMessage) => {
             return new DurationAction(message);
+        }
+    )
+
+    static readonly SET_VOLUME = new Command(
+        '%volume',
+        'Sets the volume of your theme music.',
+        '%volume 100',
+        (message: IncomingMessage) => {
+            return new VolumeAction(message);
         }
     )
     static readonly NO_COMMAND = new Command(

@@ -23,7 +23,7 @@ class AudioPlayback {
             if (!themeInfo) return;
             let link = String(themeInfo.link);
             let duration = Number(themeInfo.duration);
-            let volume: any = undefined;
+            let volume = Number(themeInfo.volume) / 100;
             let mute = false;
 
             if (mute) {
@@ -45,6 +45,7 @@ class AudioPlayback {
                     dispatcher.setVolume(volume || this.defaultVolume);
                 } catch (e) {
                     console.log("Failed to join voice channel: " + e);
+                    voiceChannel.leave();
                 }
             }
             if (!newMember.voiceChannel) {

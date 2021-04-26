@@ -30,7 +30,7 @@ class ThemeAction implements Action, RichMessage {
         let user = this.targetUser;
         this.response.setTitle("Theme");
         if (this.themeInfo) {
-            this.response.setDescription(`${user.username}, your theme is: ` + String(this.themeInfo.link) + ` (playback duration: ` + Number(this.themeInfo.duration) + ` seconds)`);
+            this.response.setDescription(`${user.username}, your theme is: ` + String(this.themeInfo.link) + ` (duration ` + Number(this.themeInfo.duration) + ` seconds, volume ` + Number(this.themeInfo.volume) + `%)`);
         } else {
             this.response.setDescription(`${user.username}, you don't have a theme set.`);
         }
