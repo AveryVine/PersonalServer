@@ -13,7 +13,7 @@ class Herald {
         this.client.on('ready', () => {
             console.log('Discord Bot powered on.');
             this.client.user.setActivity("%help", {
-                type: "PLAYING"
+                type: "LISTENING"
             });
         });
 
