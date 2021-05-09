@@ -80,11 +80,7 @@ class AudioPlayback {
         if (!newMember.voiceChannel) {
             console.log(`${newMember.displayName} has left ${oldMember.voiceChannel.name}.`);
             if (oldMember.voiceChannel && oldMember.voiceChannel.members.size <= 1) {
-                if (this.connection && oldMember.voiceChannel != this.connection.channel) {
-                    return;
-                }
-                console.log(`Every one else left ${oldMember.voiceChannel.name}. Leaving too.`);
-                oldMember.voiceChannel.leave();
+                this.playNextTheme();
             }
         }
     }
