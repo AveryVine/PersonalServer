@@ -1,10 +1,10 @@
 class ThemeInfo {
-    userId: String;
-    link: String;
-    duration: Number;
-    volume: Number;
+    userId: string;
+    link: string;
+    duration: number;
+    volume: number;
 
-    constructor(userId: String, link: String, duration: Number, volume: Number) {
+    constructor(userId: string, link: string, duration: number, volume: number) {
         this.userId = userId;
         this.link = link;
         this.duration = duration;
