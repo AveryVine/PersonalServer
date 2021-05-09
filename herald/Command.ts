@@ -9,7 +9,7 @@ import NoAction from './actions/NoAction';
 import { LeagueActionType } from './actions/LeagueAction';
 import IncomingMessage from './IncomingMessage';
 import RemoveThemeAction from './actions/RemoveThemeAction';
-import ThemeAction from './actions/ThemeAction';
+import GetThemeAction from './actions/GetThemeAction';
 import DurationAction from './actions/DurationAction';
 import VolumeAction from './actions/VolumeAction';
 
@@ -58,7 +58,7 @@ export class Command {
         'Outputs the link to the theme assigned to you.',
         '%theme',
         (message: IncomingMessage) => {
-            return new ThemeAction(message);
+            return new GetThemeAction(message);
         }
     )
     static readonly SET_DURATION = new Command(

@@ -4,12 +4,13 @@ import RichMessage from '../RichMessage';
 import Herald from '../Herald';
 import { RichEmbed, User } from 'discord.js';
 import Database from '../Database';
+import ThemeInfo from '../ThemeInfo';
 
-class ThemeAction implements Action, RichMessage {
+class GetThemeAction implements Action, RichMessage {
     message: IncomingMessage;
     response: RichEmbed;
     targetUser: User;
-    themeInfo: any;
+    themeInfo: ThemeInfo | undefined;
 
     constructor(message: IncomingMessage) {
         this.message = message;
@@ -40,4 +41,4 @@ class ThemeAction implements Action, RichMessage {
     }
 }
 
-export default ThemeAction;
+export default GetThemeAction;
