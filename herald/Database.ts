@@ -1,4 +1,5 @@
 import { Client } from 'pg';
+import ThemeInfo from './ThemeInfo';
 
 class Database {
     private static instance: Database;
@@ -24,7 +25,7 @@ class Database {
     public async getTheme(userId: String) {
         let query = "select link, duration, volume from herald where userid='" + userId + "'";
         let result = await this.client.query(query);
-        let themeInfo = result.rows[0];
+        let themeInfo = result.rows[0] as ThemeInfo;
         if (themeInfo) {
             console.log("Retrieved theme for user " + userId + ": " + String(themeInfo.link) + " (duration " + Number(themeInfo.duration) + ", volume " + Number(themeInfo.volume) + ")");
         } else {
